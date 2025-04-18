@@ -5,45 +5,66 @@ This project is a machine learning-based system to detect and classify spam emai
 
 🚀 Features
 ------------------
-1)Classifies emails into Spam or Ham.
-2)Utilizes text preprocessing and vectorization (e.g., TF-IDF, RETVec).
-3)Deep learning model built using PyTorch.
-4)Web interface using Streamlit for easy interaction.
-5)Email upload support (.txt, .eml formats).
-6)Stores classified emails in a MySQL database.
-7)Secure user authentication with hashed passwords.
+Classifies emails into Spam or Ham.
+
+Utilizes text preprocessing and vectorization (e.g., TF-IDF, RETVec).
+
+Deep learning model built using PyTorch.
+
+Web interface using Streamlit for easy interaction.
+
+Email upload support (.txt, .eml formats).
+
+Stores classified emails in a MySQL database.
+
+Secure user authentication with hashed passwords.
 
 🧠 Model
 -----------
-1)The model is trained on a labeled dataset of emails.
-2)Uses a RETVec-based tokenizer for better handling of adversarial spam.
-3)Trained using binary classification (Spam = 1, Ham = 0).
+The model is trained on a labeled dataset of emails.
+
+Uses a RETVec-based tokenizer for better handling of adversarial spam.
+
+Trained using binary classification (Spam = 1, Ham = 0).
 
 🛠️ Tech Stack
 --------------------
 Frontend: Streamlit
+
 Backend: Flask (for DB interactions)
+
 Database: MySQL
+
 ML Framework: PyTorch
+
 Tokenizer: RETVec
+
 Authentication: bcrypt (for password hashing)
 
 🧪 Usage
 ------------
-1)Sign up / Login
-2)Upload a .txt or .eml email file.
-3)Get prediction: Spam or Ham.
-4)Track past predictions in the transaction history section.
-5)View analytics with transaction graphs.
+Sign up / Login
+
+Upload a .txt or .eml email file.
+
+Get prediction: Spam or Ham.
+
+Track past predictions in the transaction history section.
+
+View analytics with transaction graphs.
 
 🔒 Security
 --------------
-1)Passwords are securely hashed using bcrypt.
-2)Input validation and sanitization are applied during file upload and DB interaction.
+Passwords are securely hashed using bcrypt.
+
+Input validation and sanitization are applied during file upload and DB interaction.
 
 📈 Future Improvements
 ---------------------------
-1)Add support for PDF/email image attachments using OCR.
-2)Integrate with email clients (e.g., Gmail API).
-3)Improve accuracy with ensemble models.
-4)Add user roles and admin dashboard.
+Add support for PDF/email image attachments using OCR.
+
+Integrate with email clients (e.g., Gmail API).
+
+Improve accuracy with ensemble models.
+
+Add user roles and admin dashboard.
