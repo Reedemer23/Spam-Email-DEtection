@@ -1,3 +1,49 @@
 # Spam-Email-DEtection
-It is one of my minor project which not only gave me new vision towards evolving cybersecurity field but tells how Emails are being part of many attacks. Email is one of our daily activities or better to say one of our part without which any professionalism cannot be achieved, maybe it has a small part of contribution in our life still avoiding it can result in critical and sensitive data explosure.
-Use of the model can be implemented by training of both RetVec(Resilient and Effective vectorizer) and Tesseract model. These models are originally made and implemented by google yet they are facing challenges to avoid spam email. So from my side i have just change the way of identifying emails which is implemented in meta model, combination of both the models.
+📧 Spam Email Detection using Machine Learning
+------------------------------------------------
+This project is a machine learning-based system to detect and classify spam emails. By analyzing the contents of emails, the model can determine whether a message is spam or legitimate (ham). This is crucial for reducing phishing attacks, scams, and unwanted email clutter.
+
+🚀 Features
+------------------
+1)Classifies emails into Spam or Ham.
+2)Utilizes text preprocessing and vectorization (e.g., TF-IDF, RETVec).
+3)Deep learning model built using PyTorch.
+4)Web interface using Streamlit for easy interaction.
+5)Email upload support (.txt, .eml formats).
+6)Stores classified emails in a MySQL database.
+7)Secure user authentication with hashed passwords.
+
+🧠 Model
+-----------
+1)The model is trained on a labeled dataset of emails.
+2)Uses a RETVec-based tokenizer for better handling of adversarial spam.
+3)Trained using binary classification (Spam = 1, Ham = 0).
+
+🛠️ Tech Stack
+--------------------
+Frontend: Streamlit
+Backend: Flask (for DB interactions)
+Database: MySQL
+ML Framework: PyTorch
+Tokenizer: RETVec
+Authentication: bcrypt (for password hashing)
+
+🧪 Usage
+------------
+1)Sign up / Login
+2)Upload a .txt or .eml email file.
+3)Get prediction: Spam or Ham.
+4)Track past predictions in the transaction history section.
+5)View analytics with transaction graphs.
+
+🔒 Security
+--------------
+1)Passwords are securely hashed using bcrypt.
+2)Input validation and sanitization are applied during file upload and DB interaction.
+
+📈 Future Improvements
+---------------------------
+1)Add support for PDF/email image attachments using OCR.
+2)Integrate with email clients (e.g., Gmail API).
+3)Improve accuracy with ensemble models.
+4)Add user roles and admin dashboard.
