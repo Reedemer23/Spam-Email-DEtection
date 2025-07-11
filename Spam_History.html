@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Email Detection | Spam History</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #121212;
+            color: white;
+        }
+
+        /* Upper Section */
+        .upper-box {
+            background-color: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+
+        .left-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+        .right-content {
+            font-size: 1rem;
+        }
+
+        /* Lower Section */
+        .lower-section {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-right: 1px solid #333;
+        }
+
+        .folder {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .inbox {
+            color: blue;
+        }
+
+        .spam {
+            color: red;
+        }
+
+        /* Email Content */
+        .email-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #2e2e2e;
+            border-radius: 5px;
+            overflow-y: auto;
+        }
+
+        .email-item {
+            background-color: #444;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .email-item h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .email-item p {
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        .email-item button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            color: white;
+            background-color: green;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .email-item button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <!-- Upper Section -->
+    <div class="upper-box">
+        <div class="left-content">
+            <div class="logo">
+                <img src="{{ url_for('serve_image', filename='Screenshot 2024-10-30 112540.png') }}" alt="Logo">
+            </div>
+            <div class="title">Spam Email Detection | Spam History</div>
+        </div> 
+        <div class="right-content">
+            <span id="usernameDisplay">{{username}}</span>
+        </div>    
+    </div>
+
+    <!-- Lower Section -->
+    <div class="lower-section">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="folder inbox" onclick="showInbox()">
+                Inbox <span id="inboxCount">{{ inbox_count }}</span>
+            </div>
+            <div class="folder spam" onclick="showSpam()">
+                Spam <span id="spamCount">{{ spam_count }}</span>
+            </div>
+        </div>
+
+        <!-- Email Content Section -->
+        <div class="email-content" id="emailContent">
+            <!-- Email items will be displayed here -->
+            {% for email in emails %}
+                <div class="email-item" data-email-id="{{ email.id }}">
+                    <h3>{{ email.subject }}</h3>
+                    <p>{{ email.body[:100] }}...</p>
+                    {% if email.label == 'spam' %}
+                        <button onclick="reclassifyEmail('{{ email.id }}', 'ham')">Mark as Ham</button>
+                    {% else %}
+                        <button onclick="reclassifyEmail('{{ email.id }}', 'spam')">Mark as Spam</button>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        const username = localStorage.getItem('username');
+        if (username) {
+            document.getElementById('usernameDisplay').textContent = username;
+        } else {
+            // Redirect to login if no username is found
+            window.location.href = '/login';
+        }
+        // Function to fetch inbox and spam emails from the server
+        async function fetchEmails(category) {
+            try {
+                const response = await fetch(`/fetch_emails/${category}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    const emailContent = document.getElementById('emailContent');
+
+                    // Update the email content section
+                    emailContent.innerHTML = data.emails.map(email => `
+                        <div class="email-item" data-email-id="${email.id}">
+                            <h3>Email ID: ${email.id}</h3>
+                            <p>${email.body}</p>
+                            <button onclick="reclassifyEmail('${email.id}', '${category === 'spam' ? 'ham' : 'spam'}')">
+                                Mark as ${category === 'spam' ? 'Ham' : 'Spam'}
+                            </button>
+                        </div>
+                    `).join('');
+
+                    // Update sidebar counts
+                    document.getElementById('inboxCount').textContent = data.inbox_count;
+                    document.getElementById('spamCount').textContent = data.spam_count;
+                } else {
+                    console.error('Error fetching emails:', data.error);
+                }
+            } catch (error) {
+                console.error('Error fetching emails:', error);
+            }
+        }
+        // Function to reclassify an email
+        async function reclassifyEmail(emailId, newLabel) {
+            try {
+                const response = await fetch('/spam_history', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: emailId, label: newLabel })
+                });
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    alert(result.message);
+                    document.getElementById('inboxCount').textContent = result.inbox_count;
+                    document.getElementById('spamCount').textContent = result.spam_count;
+    
+                    // Update spam gauge dynamically
+                    updateSpamGauge(result.spam_count, result.inbox_count);
+                    fetchEmails('inbox'); // Refresh inbox emails dynamically
+                    fetchEmails('spam');  // Refresh spam emails dynamically
+                    location.reload(); // Refresh to reflect reclassification
+                } else {
+                    alert('Failed to reclassify email.');
+                }
+            } catch (error) {
+                console.error('Error reclassifying email:', error);
+            }
+        }
+
+        // Show inbox or spam emails based on selected folder
+        function showInbox() {
+            fetchEmails('inbox');
+        }
+
+        function showSpam() {
+            fetchEmails('spam');
+        }
+
+        // Initialize with inbox emails on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await showInbox();
+            } catch (error) {
+                console.error('Failed to load inbox:', error);
+            }
+        });
+    </script>
+</body>
+</html>
