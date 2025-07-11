@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Email Detection</title>   
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        
+        /* Upper Section */
+        .upper-box {
+            background-color: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            position: relative;
+        }
+        
+        /* Left content (Logo and Title) */
+        .left-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 50px;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+         /* Dropdown Menu */
+         .menu {
+            position: relative;
+        }
+        
+        .menu-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hover effect for menu icon */
+        .menu-icon:hover {
+            color: seagreen;
+        }
+        
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: black;
+            color: white;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 20;
+        }
+        
+        .dropdown a {
+            display: block;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .dropdown a:hover {
+            background-color: seagreen;
+        }
+        
+        /* Lower Section */
+        .lower-box {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items:center;
+            justify-content: flex-start;
+            color: white;
+            background-color: black;
+        } 
+        
+        
+        .video-container {
+            height: 100%; /* Video takes up half of the lower section */
+            top: 0%;
+            left: 0%;
+            position: relative;
+        }
+
+        .homepage-video {
+            width: 250%;
+            height: 50%;
+            object-fit: cover;
+            z-index: -1; 
+        }
+        
+        .row justify-content-center {
+            height: 250%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 20;
+        }
+        
+        .priority-text{
+            font-size: 2rem;
+            font-weight: bold;
+            left: 0;
+            margin-bottom: 20px;
+            color: black;
+        }
+        
+        .additional-paragraph {
+            font-size: 1rem;
+            margin-left: 0;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            color: #ccc;
+        }
+        
+        .sponsors {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            height: 60px; /* Adjust height as needed */
+        }
+        
+        .logo-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 0;
+            padding: 0 40px; /* Increased padding for wider spacing */
+        }
+        
+        .sponsor-logo {
+            width: 100px; /* Fixed width for logos */ /* Fixed height for logos */
+            overflow: hidden; /* Ensure logos fit */
+        }
+        
+        .sponsor-logo img {
+            width: 100%; /* Make images responsive within the box */
+            height: auto; /* Keep aspect ratio */
+            display: block; /* Remove extra space below images */
+        }
+        
+        .sponsor-container {
+            display: flex;
+            animation: slide 10s linear infinite; /* Animation */
+            white-space: nowrap; /* Prevent logos from wrapping */
+        }
+
+        /* Animations */
+        @keyframes slide {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        </style>
+</head>
+<body>
+
+    <!-- Upper Section -->
+    <div class="upper-box">
+        <div class="left-content">
+            <div class="logo">
+                <img src="{{ url_for('serve_image', filename='Screenshot 2024-10-30 112540.png') }}" alt="Logo"> 
+            </div>
+            <div class="title">Spam Email Detection</div>
+        </div>
+        <div class="menu">
+            <div class="menu-icon" onclick="toggleDropdown()">☰</div>
+            <div class="dropdown" id="dropdown">
+                <!-- Login Button -->
+                <a href="/login" class="dropdown-item">Login</a>
+                <!-- Demo Button -->
+                <a href="/demo" class="dropdown-item">Demo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lower Section -->
+    <div class="lower-box">
+        <div class="video-container">
+            <video autoplay muted loop class="homepage-video">
+                <source src="{{ url_for('serve_video', filename='166439247-email-spam-concept.mp4') }}" type="video/mp4"> 
+            </video>
+        </div>
+        <div class="row justify-content-center">
+            <div class="priority-text">
+                <h1 class="font-size42 font-size48-xxs font-size60-xs font-size80-md line-height-42 line-height-48-xxs line-height-60-xs line-height-72-md mt-2">
+                    Your Priority
+                    <br>
+                    Your Emails
+                </h1>
+            </div>
+            <div class="additional-paragraph">
+                Stay focused on the emails that matter the most to you. Let our 
+                <br>
+                advanced detection ensure the important ones are always in sight.
+            </div>
+            <div class="sponsors">
+                <div class="sponsor-container">
+                    <div class="logo-box">
+                        <div class="sponsor-logo">
+                            <img src="{{ url_for('serve_image', filename='Screenshot 2024-10-30 114632.png') }}" alt="AWS Logo">
+                        </div>
+                    </div>
+                    <div class="logo-box">
+                        <div class="sponsor-logo">
+                            <img src="{{ url_for('serve_image', filename='Screenshot 2024-10-30 113746.png') }}" alt="Deloitte Logo">
+                        </div>
+                    </div>
+                    <div class="logo-box">
+                        <div class="sponsor-logo">
+                            <img src="{{ url_for('serve_image', filename='Screenshot 2024-10-30 115148.png') }}" alt="Intel Logo">
+                        </div>
+                    </div>
+                    <div class="logo-box">
+                        <div class="sponsor-logo">
+                            <img src="{{ url_for('serve_image', filename='Screenshot 2024-10-30 114423.png') }}" alt="IBM Logo">
+                        </div>
+                    </div>
+                    <div class="logo-box">
+                        <div class="sponsor-logo">
+                            <img src="{{ url_for('serve_image', filename='Screenshot 2024-10-30 115101.png') }}" alt="Google Logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Dropdown Menu
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            const dropdown = document.getElementById('dropdown');
+            if (!event.target.matches('.menu-icon')) {
+                dropdown.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
