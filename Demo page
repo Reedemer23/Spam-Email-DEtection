@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Email Detection Demo</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        
+        /* Upper Section */
+        .upper-box {
+            background-color: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+        
+        /* Left content (Logo and Title) */
+        .left-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 50px;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+        /* Lower Section */
+        .lower-box {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centers content horizontally */
+            color: white;
+            background-color: black;
+        }
+
+        .lower-half h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .contact-form {
+            background-color: grey;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            height: 80px;
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .contact-form button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Upper Section -->
+    <div class="upper-box">
+        <div class="left-content">
+            <div class="logo">
+                <img src="{{ url_for('serve_image', filename='Screenshot 2024-10-30 112540.png') }}" alt="Logo"> 
+            </div>
+            <div class="title">Spam Email Detection</div>
+        </div>
+    </div>
+
+    <!-- Lower Section -->
+    <div class="lower-box">
+        <div class="lower-half">
+            <h2>Contact our Team</h2>
+            <div class="contact-form">
+                <form action="/submit_contact" method="POST">
+                    <input type="text" name="username" placeholder="Your Name*" required>
+                    <input type="email" name="email" placeholder="Email Address*" required>
+                    <input type="password" name="password" placeholder="Password*" required>
+                    <textarea name="reason" placeholder="Why are you using our service?" required></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
